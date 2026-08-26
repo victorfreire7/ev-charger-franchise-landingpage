@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const START_Y = 2.8
-const END_Y   = -0.2
+const END_Y   = -1.2
 
 export default function ChargerModel({ scrollProgress }) {
   const { scene } = useGLTF('/models/charger.glb')
@@ -29,7 +29,7 @@ export default function ChargerModel({ scrollProgress }) {
     if (!group.current) return
     const t = scrollProgress.current
     group.current.position.y = THREE.MathUtils.lerp(START_Y, END_Y, t)
-    group.current.rotation.y = THREE.MathUtils.lerp(0, Math.PI * 0.35, t)
+    group.current.rotation.y = THREE.MathUtils.lerp(Math.PI * 0.35, 0, t)
   })
 
   return (

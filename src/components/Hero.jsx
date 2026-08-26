@@ -51,7 +51,7 @@ export default function Hero() {
           {/* Canvas 3D */}
           <Canvas
             className="model-canvas"
-            camera={{ position: [0, 0.8, 7], fov: 36 }}
+            camera={{ position: [0, 0.2, 8], fov: 36 }}
             gl={{ antialias: true }}
           >
             <ambientLight intensity={0.5} />
