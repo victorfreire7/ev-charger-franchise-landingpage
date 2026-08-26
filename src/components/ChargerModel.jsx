@@ -1,21 +1,18 @@
 import { useRef, useLayoutEffect, useState } from 'react'
-import { useGLTF, useScroll, ContactShadows } from '@react-three/drei'
+import { useGLTF, ContactShadows } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const START_Y = 2.8  // altura de onde o carregador "flutua" no início
-const END_Y = -0.4   // desce levemente abaixo do centro ao fim do scroll
+const START_Y = 2.8
+const END_Y   = -0.2
 
-export default function ChargerModel() {
+export default function ChargerModel({ scrollProgress }) {
   const { scene } = useGLTF('/models/charger.glb')
-  const group = useRef()
-  const scroll = useScroll()
+  const group     = useRef()
   const [fitScale, setFitScale] = useState(1)
 
-  // Centraliza o modelo e calcula uma escala que caiba bem na cena,
-  // já que não sabemos de antemão as dimensões originais do .glb
   useLayoutEffect(() => {
-    const box = new THREE.Box3().setFromObject(scene)
+    const box  = new THREE.Box3().setFromObject(scene)
     const size = new THREE.Vector3()
     box.getSize(size)
     const center = new THREE.Vector3()
@@ -23,23 +20,28 @@ export default function ChargerModel() {
 
     scene.position.x -= center.x
     scene.position.z -= center.z
-    scene.position.y -= box.min.y // apoia a base do modelo em y = 0
+    scene.position.y -= box.min.y
 
-    const targetHeight = 3
-    setFitScale(targetHeight / (size.y || 1))
+    setFitScale(3 / (size.y || 1))
   }, [scene])
 
   useFrame(() => {
     if (!group.current) return
-    const offset = scroll.offset // 0 -> 1 conforme o usuário rola
-    group.current.position.y = THREE.MathUtils.lerp(START_Y, END_Y, offset)
-    group.current.rotation.y = THREE.MathUtils.lerp(0, Math.PI * 0.35, offset)
+    const t = scrollProgress.current
+    group.current.position.y = THREE.MathUtils.lerp(START_Y, END_Y, t)
+    group.current.rotation.y = THREE.MathUtils.lerp(0, Math.PI * 0.35, t)
   })
 
   return (
     <group ref={group} scale={fitScale}>
       <primitive object={scene} />
-      <ContactShadows position={[0, 0.01, 0]} opacity={0.5} scale={8} blur={2} far={2} />
+      <ContactShadows
+        position={[0, 0.01, 0]}
+        opacity={0.5}
+        scale={8}
+        blur={2}
+        far={2}
+      />
     </group>
   )
 }
