@@ -3,7 +3,7 @@ import { useGLTF, ContactShadows } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const START_Y = 2.8
+const START_Y = 5.5
 const END_Y   = -1.2
 
 export default function ChargerModel({ scrollProgress }) {
