@@ -81,10 +81,15 @@ export default function Hero() {
               Monte sua franquia de carregadores elétricos e lidere
               a transição energética na sua cidade.
             </p>
-            <button className="hero-cta">
+            <a
+              className="hero-cta"
+              href="https://victorfreire7.github.io/ev-charger-franchise-system/auth.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Quero ser franqueado
               <span className="hero-cta-arrow">→</span>
-            </button>
+            </a>
           </div>
 
           {/* Caixas laterais glassmorphism */}
@@ -165,10 +170,15 @@ export default function Hero() {
             </div>
           </div>
 
-          <button className="content-cta">
+          <a
+            className="content-cta"
+            href="https://wa.me/5511952491055"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Falar com um consultor
             <span>→</span>
-          </button>
+          </a>
         </div>
       </section>
 
